@@ -56,17 +56,16 @@ A Flutter app for configuring and controlling IoT devices via Bluetooth and MQTT
 
 ### ⚙️ Dependencies
 
-dependencies:
-  flutter:
-    sdk: flutter
-  flutter_bloc: ^8.1.0
-  mqtt_client: ^9.6.1
-  flutter_blue_plus: ^1.9.3
-  permission_handler: ^11.0.1
-  dio: ^5.3.2
-  encrypt: ^5.0.1
-  provider: ^6.0.5
-  http: ^1.1.0
+  flutter:<br>
+    &nbsp;&nbsp;sdk: flutter<br>
+  flutter_bloc: ^8.1.0<br>
+  mqtt_client: ^9.6.1<br>
+  flutter_blue_plus: ^1.9.3<br>
+  permission_handler: ^11.0.1<br>
+  dio: ^5.3.2<br>
+  encrypt: ^5.0.1<br>
+  provider: ^6.0.5<br>
+  http: ^1.1.0<br>
 
 
 ## 📃 License
