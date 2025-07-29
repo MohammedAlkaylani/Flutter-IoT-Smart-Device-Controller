@@ -13,7 +13,7 @@ A Flutter app for configuring and controlling IoT devices via Bluetooth and MQTT
 
 ## 🛠️ Project Structure
 
-lib/
+lib/\n
 ├── cubit/                    # Business logic and state management
 │   ├── bloc_observer.dart
 │   ├── cubit.dart
