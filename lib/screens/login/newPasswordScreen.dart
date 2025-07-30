@@ -1,10 +1,9 @@
+import 'package:myapp/screen/Cooker/login/passwordChangedScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/main.dart';
 
 class NewPasswordScreen extends StatefulWidget {
-  final int userId;
-  
-  const NewPasswordScreen({super.key, required this.userId});
+  const NewPasswordScreen({super.key});
 
   @override
   _NewPasswordScreenState createState() => _NewPasswordScreenState();
@@ -17,13 +16,11 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   final _confirmPasswordController = TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isSmallScreen = size.width < 375;
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -75,11 +72,24 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 controller: _currentPasswordController,
                 obscureText: true,
                 decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: isSmallScreen ? 14 : 18,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Color(0xFFE8ECF4)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Color(0xFFF18000)),
+                  ),
                   labelText: 'Current Password',
                   prefixIcon: Icon(Icons.lock),
                 ),
               ),
               SizedBox(height: size.height * 0.01),
+              SizedBox(height: size.height * 0.025),
               TextField(
                 controller: _newPasswordController,
                 obscureText: true,
@@ -98,11 +108,13 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   ),
                   labelText: 'New Password',
                   hintStyle: const TextStyle(color: Color(0xFF8391A1)),
-                  prefixIcon: const Icon(Icons.lock_outlined, color: Colors.grey),
+                  prefixIcon:
+                      const Icon(Icons.lock_outlined, color: Colors.grey),
                   filled: true,
                   fillColor: const Color(0xFFF7F8F9),
                   suffixIcon: IconButton(
-                    icon: const Icon(Icons.visibility_outlined, color: Colors.grey),
+                    icon: const Icon(Icons.visibility_outlined,
+                        color: Colors.grey),
                     onPressed: () {},
                   ),
                 ),
@@ -112,14 +124,6 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 ),
               ),
               SizedBox(height: size.height * 0.025),
-              const Text(
-                'Confirm Password',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF1E232C),
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
               SizedBox(height: size.height * 0.01),
               TextField(
                 controller: _confirmPasswordController,
@@ -139,11 +143,13 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   ),
                   labelText: 'Confirm New Password',
                   hintStyle: const TextStyle(color: Color(0xFF8391A1)),
-                  prefixIcon: const Icon(Icons.lock_outlined, color: Colors.grey),
+                  prefixIcon:
+                      const Icon(Icons.lock_outlined, color: Colors.grey),
                   filled: true,
                   fillColor: const Color(0xFFF7F8F9),
                   suffixIcon: IconButton(
-                    icon: const Icon(Icons.visibility_outlined, color: Colors.grey),
+                    icon: const Icon(Icons.visibility_outlined,
+                        color: Colors.grey),
                     onPressed: () {},
                   ),
                 ),
@@ -159,7 +165,13 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 width: double.infinity,
                 height: isSmallScreen ? 50 : 56,
                 child: ElevatedButton(
-                  onPressed: _isLoading ? null : _resetPassword,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Passwordchangedscreen()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF1E232C),
                     shape: RoundedRectangleBorder(
@@ -167,16 +179,14 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                     ),
                     elevation: 0,
                   ),
-                  child: _isLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : Text(
-                          'Reset Password',
-                          style: TextStyle(
-                            fontSize: isSmallScreen ? 16 : 18,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
+                  child: Text(
+                    'Reset Password',
+                    style: TextStyle(
+                      fontSize: isSmallScreen ? 16 : 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -184,46 +194,6 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> _resetPassword() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    if (_newPasswordController.text != _confirmPasswordController.text) {
-      setState(() => _errorMessage = 'Passwords do not match');
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-    });
-
-    try {
-      // Simulate password reset API call
-      await Future.delayed(const Duration(seconds: 2));
-      
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Password updated successfully')),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        setState(() => _errorMessage = 'Failed to update password');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: ${e.toString()}')),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
-    }
   }
 
   @override
