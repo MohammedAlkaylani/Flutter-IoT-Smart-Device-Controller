@@ -159,7 +159,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => NewPasswordScreen(
-              userId: _cubit.userId,
             ),
           ),
         );
